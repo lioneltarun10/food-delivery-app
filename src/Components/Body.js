@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CardList from './CardList';
+import Shimmer from './Shimmer';
 
 const Body = () => {
   
@@ -17,16 +18,29 @@ const Body = () => {
     useEffect(() => {
        foodItems();
     },[])
-    
-    return (
 
-    <div className='mx-auto w-[80%] bg-gray-200 shadow-lg'>
-         
-          <CardList title= 'Whats on your Mind' foodImages = {foodList[0]?.card?.card?.gridElements?.infoWithStyle?.info} />
+    
+    return foodList.length  > 0? (
+
+    <div className='mx-auto w-[80%] bg-white opacity-95 shadow-lg'>
+         {
+          
+          foodList.length > 0 && 
+          foodList.map((cardSection,id) =>{
+            if(id === 0 || id === 4){
+              return <CardList key={id} title= {cardSection?.card?.card?.header?.title} foodImages = {cardSection?.card?.card?.gridElements?.infoWithStyle} />  
+            }
+            return null;
+              
+          })
+          
+
+         }
+          
 
 
     </div>
-  )
+  ): <Shimmer /> ;
 }
 
 export default Body
